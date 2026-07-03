@@ -1,24 +1,88 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg width="512px" height="512px" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
-    <g transform="matrix(1,0,0,1,-734,0)">
-        <g id="Artboard3" transform="matrix(0.741178,0,0,0.73941,189.822,133.422)">
-            <rect x="734.208" y="-180.444" width="690.792" height="692.444" style="fill:none;"/>
-            <g id="g2221" transform="matrix(5.72329,0,0,5.73697,406.05,-691.239)">
-                <g id="Layer-2" serif:id="Layer 2">
-                    <g id="g22211" serif:id="g2221">
-                        <g id="path26" transform="matrix(1.7333,0,0,1.72464,-36.9275,-59.3636)">
-                            <ellipse cx="89.202" cy="121.039" rx="32.302" ry="32.464" style="fill:white;"/>
-                        </g>
-                        <g id="path28" transform="matrix(1.00106,0,0,1.00171,-0.641439,-0.841358)">
-                            <ellipse cx="118.203" cy="149.97" rx="49.218" ry="49.185" style="fill:rgb(113,75,103);"/>
-                        </g>
-                        <g id="path859" transform="matrix(1.00285,0,0,0.996901,-0.432423,-0.053773)">
-                            <ellipse cx="118.239" cy="149.903" rx="29.619" ry="29.796" style="fill:white;"/>
-                        </g>
-                    </g>
-                </g>
-            </g>
-        </g>
+<svg width="2400" height="1200" viewBox="0 0 2400 1200" xmlns="http://www.w3.org/2000/svg">
+
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00D9FF"/>
+      <stop offset="50%" stop-color="#4B7BFF"/>
+      <stop offset="100%" stop-color="#D94BFF"/>
+    </linearGradient>
+
+    <linearGradient id="gradX" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00D9FF"/>
+      <stop offset="100%" stop-color="#D94BFF"/>
+    </linearGradient>
+
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="100%" height="100%" fill="#000000"/>
+
+  <g transform="translate(300,600)" filter="url(#glow)">
+
+    <path d="M-40 130
+             C-160 50,-140 -120,80 -180
+             C240 -220,360 -120,320 -20"
+          fill="none"
+          stroke="url(#grad1)"
+          stroke-width="24"
+          stroke-linecap="round"/>
+
+    <path d="M20 180
+             C160 230,280 200,340 120
+             C390 60,380 -40,300 -100"
+          fill="none"
+          stroke="url(#grad1)"
+          stroke-width="24"
+          stroke-linecap="round"/>
+
+    <path d="M220 -60
+             C120 -120,10 -90,-30 0
+             C-60 80,0 170,120 170
+             C200 170,280 120,320 60
+             L210 40
+             C180 80,130 90,90 70
+             C40 40,40 -20,90 -50
+             C130 -70,180 -60,220 -30"
+          fill="none"
+          stroke="url(#grad1)"
+          stroke-width="56"
+          stroke-linecap="round"
+          stroke-linejoin="round"/>
+
+    <circle cx="60" cy="-150" r="24" fill="#24DFFF"/>
+    <circle cx="20" cy="150" r="20" fill="#24DFFF"/>
+    <circle cx="320" cy="-40" r="12" fill="#B76CFF"/>
+  </g>
+
+  <g transform="translate(850,700)">
+    <text x="0" y="0"
+          font-family="Arial Black, Arial, sans-serif"
+          font-size="240"
+          font-weight="900"
+          fill="#FFFFFF"
+          stroke="#000000"
+          stroke-width="12"
+          letter-spacing="2">
+      GoTry
+    </text>
+
+    <g transform="translate(980,-170)">
+      <path d="M0 0 L160 180"
+            stroke="url(#gradX)"
+            stroke-width="44"
+            stroke-linecap="round"/>
+      <path d="M160 0 L0 180"
+            stroke="url(#gradX)"
+            stroke-width="44"
+            stroke-linecap="round"/>
     </g>
+  </g>
+
 </svg>
