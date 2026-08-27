@@ -3,40 +3,90 @@
 
   <t t-name="web.NavBar">
     <header class="o_navbar" t-ref="root">
-      <nav
-        class="o_main_navbar d-print-none"
-        data-command-category="disabled"
-      >
-        <!-- Apps Menu -->
-        <t t-call="web.NavBar.AppsMenu">
+      <!-- 1. GOTRYX MODERN VERTICAL SIDEBAR -->
+      <aside class="o_sidebar_nav d-print-none">
+        <!-- Sidebar Header / Logo -->
+        <div class="o_sidebar_brand">
+          <a href="/odoo" class="o_sidebar_logo_link" title="GoTryx Enterprise">
+            <!-- Extended Logo -->
+            <div class="o_logo_extended_wrapper d-flex align-items-center">
+              <img src="/gotryx_login/static/src/img/logo.png" class="o_logo_extended" alt="GoTryx Enterprise"/>
+            </div>
+            <!-- Collapsed Logo (Orbital G) -->
+            <div class="o_logo_collapsed_wrapper d-flex align-items-center justify-content-center">
+              <img src="/gotryx_theme/static/src/img/gotryx-icon-192x192.png" class="o_logo_collapsed" alt="GoTryx"/>
+            </div>
+          </a>
+        </div>
+
+        <!-- Vertical Apps Menu List -->
+        <div class="o_sidebar_apps_menu flex-grow-1 overflow-y-auto">
           <t t-set="apps" t-value="menuService.getApps()" />
+          <ul class="o_sidebar_apps_list list-unstyled m-0 p-2">
+            <t t-foreach="apps" t-as="app" t-key="app.id">
+              <li class="o_sidebar_app_item">
+                <a t-att-href="getMenuItemHref(app)"
+                   t-att-data-menu-xmlid="app.xmlid"
+                   t-att-data-section="app.id"
+                   t-att-class="{ 'o_sidebar_app_link': true, 'active': currentApp and currentApp.id === app.id }"
+                   t-on-click.prevent="() => this.onNavBarDropdownItemSelection(app)">
+                  <!-- App Icon -->
+                  <div class="o_app_icon_wrapper">
+                    <t t-if="app.webIconData">
+                      <img class="o_app_icon" t-att-src="app.webIconData" t-att-alt="app.name"/>
+                    </t>
+                    <t t-else="">
+                      <i class="oi oi-apps o_app_icon_fallback"/>
+                    </t>
+                  </div>
+                  <!-- App Name Text (Extended state) -->
+                  <span class="o_app_name" t-esc="app.name"/>
+                  <!-- Floating Tooltip (Collapsed state hover) -->
+                  <span class="o_sidebar_tooltip" t-esc="app.name"/>
+                </a>
+              </li>
+            </t>
+          </ul>
+        </div>
+
+        <!-- Sidebar Footer / Toggle Button -->
+        <div class="o_sidebar_footer">
+          <button class="o_sidebar_toggle_btn border-0" title="Alternar Menu (Comprimido / Estendido)" aria-label="Toggle Sidebar">
+            <i class="oi oi-chevron-left o_toggle_icon"/>
+            <span class="o_toggle_text ms-2">Recolher</span>
+          </button>
+        </div>
+      </aside>
+
+      <!-- 2. GOTRYX TOPBAR (Next to Sidebar) -->
+      <nav class="o_main_navbar o_navbar_topbar d-print-none" data-command-category="disabled">
+        <!-- Mobile Burger Toggle -->
+        <t t-if="this.ui.isSmall">
+          <a href="/odoo" class="o_menu_toggle border-0" t-att-class="{'hasImage': currentApp?.webIconData}" accesskey="h" t-ref="menuApps" t-on-click.prevent="_openAppMenuSidebar">
+            <t t-call="web.NavBar.AppsMenu.Sidebar"/>
+          </a>
         </t>
 
-        <!-- App Brand -->
-        <DropdownItem
-          t-if="!this.ui.isSmall and currentApp"
-          t-esc="currentApp.name"
-          class="'o_menu_brand d-flex'"
-          onSelected="() => this.onNavBarDropdownItemSelection(currentApp)"
-          attrs="{ href: getMenuItemHref(currentApp), 'data-menu-xmlid': currentApp.xmlid, 'data-section': currentApp.id }"
-        />
+        <!-- Current App Name / Brand in Topbar -->
+        <div t-if="!this.ui.isSmall and currentApp" class="o_menu_brand_topbar d-flex align-items-center me-3">
+          <span class="fw-bold fs-6 text-light" t-esc="currentApp.name"/>
+        </div>
 
         <div class="o_navbar_breadcrumbs d-contents"/>
 
+        <!-- Current App Sub-sections / Sub-menus -->
         <t t-if="!this.ui.isSmall">
-          <!-- Current App Sections -->
           <t t-if="currentAppSections.length" t-call="web.NavBar.SectionsMenu">
             <t t-set="sections" t-value="currentAppSections" />
           </t>
         </t>
 
-        <!-- Systray -->
+        <!-- Systray (Notifications, User Menu, Dark Mode, etc.) -->
         <div class="o_menu_systray d-flex flex-shrink-0 ms-auto bg-inherit" role="menu">
           <t t-foreach="systrayItems" t-as="item" t-key="item.key">
-            <!-- This ensures the correct order of the systray items -->
             <div t-att-data-index="item.index"/>
             <ErrorHandler onError="error => this.handleItemError(error, item)">
-                <t t-component="item.Component" t-props="item.props"/>
+              <t t-component="item.Component" t-props="item.props"/>
             </ErrorHandler>
           </t>
         </div>
@@ -176,8 +226,9 @@
                     </t>
                     <t t-else="">
                         <Dropdown>
-                            <button t-att-data-hotkey="hotkey" t-att-data-menu-xmlid="section.xmlid">
+                            <button t-att-data-hotkey="hotkey" t-att-data-menu-xmlid="section.xmlid" class="dropdown-toggle border-0 bg-transparent d-inline-flex align-items-center">
                                 <span t-esc="section.name" t-att-data-section="section.id" />
+                                <i class="oi oi-chevron-down ms-1" style="font-size: 0.75em;"/>
                             </button>
                             <t t-set-slot="content">
                                 <t t-call="web.NavBar.SectionsMenu.Dropdown.MenuSlot">
