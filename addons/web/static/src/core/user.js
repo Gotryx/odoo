@@ -229,16 +229,20 @@ export function _makeUser(session) {
                 for (const companyId of companyIds) {
                     if (!newCompanyIds.includes(companyId)) {
                         newCompanyIds.push(companyId);
-                        addCompanies(allowedCompanies.find((c) => c.id === companyId).child_ids);
+                        const company = allowedCompanies.find((c) => c.id === companyId);
+                        if (company && company.child_ids) {
+                            addCompanies(company.child_ids);
+                        }
                     }
                 }
             }
 
             if (options.includeChildCompanies) {
                 addCompanies(
-                    companyIds.flatMap(
-                        (companyId) => allowedCompanies.find((c) => c.id === companyId).child_ids
-                    )
+                    companyIds.flatMap((companyId) => {
+                        const company = allowedCompanies.find((c) => c.id === companyId);
+                        return company && company.child_ids ? company.child_ids : [];
+                    })
                 );
             }
 
